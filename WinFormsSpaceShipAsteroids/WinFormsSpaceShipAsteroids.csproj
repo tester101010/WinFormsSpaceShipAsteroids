@@ -81,6 +81,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ResourceTextures.resx</DependentUpon>
     </Compile>
+    <Compile Include="Ship.cs" />
     <Compile Include="Star.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

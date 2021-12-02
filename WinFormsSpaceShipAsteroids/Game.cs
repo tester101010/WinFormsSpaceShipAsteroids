@@ -18,16 +18,16 @@ namespace WinFormsSpaceShipAsteroids
         public static int Heigth { get; set; }
 
 
-        private static BaseObject[] _objs;//В начале программы массив должен остаться static
+        //private static BaseObject[] _objs;//В начале программы массив должен остаться static
         private static Asteroid[] _asteroids;
         //private static Rocks[] _rocks;
-        //private static Comet[] _comets;
+        private static Comet[] _comets;
         //public static Healing[] _healings;
         private static Star[] _stars;
         private static BackGrnd[] _backGrnds;
-        private static int _backGrndsScrollSpeed=1;
+        private static int _backGrndsScrollSpeed = 1;
         private static Bullet _bullet;
-                                //private static SoundPlayer _s1;
+        //private static SoundPlayer _s1;
 
 
         public Game()
@@ -76,8 +76,8 @@ namespace WinFormsSpaceShipAsteroids
 
             #endregion
             _backGrnds = new BackGrnd[2];
-            _backGrnds[0] = new BackGrnd(new Point(Game.Width,0), new Point(_backGrndsScrollSpeed, 0),new Size(1,1));
-            _backGrnds[1] = new BackGrnd(new Point(0,0), new Point(_backGrndsScrollSpeed, 0),new Size(1,1));
+            _backGrnds[0] = new BackGrnd(new Point(Game.Width, 0), new Point(_backGrndsScrollSpeed, 0), new Size(1, 1));
+            _backGrnds[1] = new BackGrnd(new Point(0, 0), new Point(_backGrndsScrollSpeed, 0), new Size(1, 1));
 
             int _speedSpaceObjs = 9;
             int rndMin = 3;
@@ -86,11 +86,12 @@ namespace WinFormsSpaceShipAsteroids
             int rMinMax = rnd.Next(rndMin, rndMax);
             int[] rndObj = new int[10];
 
-            _objs = new BaseObject[6];
+            //_objs = new BaseObject[6];
+            _comets = new Comet[6];
             _stars = new Star[20];
             _asteroids = new Asteroid[4];
 
-            _bullet = new Bullet(new Point(0,200), new Point(0, 0),new Size(14,22));
+            _bullet = new Bullet(new Point(0, 200), new Point(0, 0), new Size(14, 22));
 
             //for (int i = 0; i < arrLength; i++)
             //{
@@ -100,10 +101,10 @@ namespace WinFormsSpaceShipAsteroids
 
 
             #region V1
-            for (int i = 0; i < _objs.Length; i++)
+            for (int i = 0; i < _comets.Length; i++)
             {
                 int rSp = rnd.Next(5, 50);                                        // new Point( -i*r, -i*r )
-                _objs[i] = new Comet(new Point(Width, rnd.Next(1,Game.Heigth)), new Point((rSp /3)*2, 0), new Size(1, 1));
+                _comets[i] = new Comet(new Point(Width, rnd.Next(1, Game.Heigth)), new Point((rSp / 3) * 2, 0), new Size(1, 1));
             }
 
             for (int i = 0; i < _stars.Length; i++)            //       ((i)+(r+i*i), 0),
@@ -116,7 +117,7 @@ namespace WinFormsSpaceShipAsteroids
             for (int i = 0; i < _asteroids.Length; i++)
             {
                 int rSp = rnd.Next(5, 50);                                        // new Point(_speedSpaceObjs, 0)||(-rSp / 5, rSp)
-                _asteroids[i] = new Asteroid(new Point(Width, rnd.Next(1, Game.Heigth)), new Point(rSp/2 , 0), new Size(rSp * 5, rSp * 5));
+                _asteroids[i] = new Asteroid(new Point(Width, rnd.Next(1, Game.Heigth)), new Point(rSp / 2, 0), new Size(rSp * 5, rSp * 5));
             }
             #endregion
 
@@ -136,40 +137,84 @@ namespace WinFormsSpaceShipAsteroids
             #endregion
         }
 
+        public static Ship _ship = new Ship(new Point(126, 126), new Point(22, 22), new Size(100, 50));
+
+        private static void ActionWithComets()
+        {
+            for (int i = 0; i < _comets.Length; i++)
+            {
+                if (_comets[i] == null)
+                    continue;
+
+                //if (_ship?.Bullet != null && _ship.Bullet.Collision(_comets[i]))
+                //{
+                //    //SystemSound.Hand.Play();
+                //    _comets[i] = null;
+                //    _ship?.BulletDestroy();
+                //    continue;
+                //}
+
+                //if (!_ship.Collision(_comets[i]))
+                //    continue;
+
+                //_ship?.EnergyLow(_comets[i].Damage);
+                _comets[i] = null;
+
+                //// SystemSound.Asterisk.Play();
+                //if (_ship.Energy <= 0)
+                //    _ship?.Die();
+            }
+        }
+
+        private static void Form_KeyDown(object sender, KeyEventArgs e) // медод с логикой управления
+        {
+            //if (e.KeyCode == Keys.ControlKey) _ship.ShootBullet();
+            if (e.KeyCode == Keys.Up) _ship.Up();
+            if (e.KeyCode == Keys.Down) _ship.Down();
+            if (e.KeyCode == Keys.Left) _ship.Left();
+            if (e.KeyCode == Keys.Right) _ship.Right();
+            //if (e.KeyCode == Keys.Escape) _ship.Die(); // TODO
+            //if (e.KeyCode == Keys.Escape) Game.Finish();
+            //GamePause(e);
+        }
+
         public static void Update()
         {
             _backGrnds[0]?.Update();
             _backGrnds[1]?.Update();
 
-            //Random rnd = new Random();
+            Random rnd = new Random();
+            int rSp = rnd.Next(5, 50);                                        // new Point( -i*r, -i*r )
             //int r = rnd.Next(5, 20);
-            foreach (BaseObject obj in _objs)
+            foreach (Comet comet in _comets)
             {
-                obj?.Update();
-                if (obj.Collision(_bullet))
+                comet?.Update();
+                if (comet.Collision(_bullet))
                 {
                     //Game.Buffer.Graphics.DrawImage(ResourceTextures.asteroids1, Pos.X, Pos.Y , 15, 15);
                     //System.Media.SoundPlayer = ResourceTextures.Windows_Hardware_Remove;  //Hand.Play();
                     //System.Media.SystemSounds.Hand.Play();
-                    Console.Beep( 300,  80);
+                    Console.Beep(600, 120);
+                   // ActionWithComets(); //= new  Comet(new Point(Width, rnd.Next(1, Game.Heigth)), new Point((rSp / 3) * 2, 0), new Size(1, 1));
+
                 }
             }
-            foreach (Star s in _stars)
+            foreach (Star star in _stars)
             {
-                s?.Update();
-                if (s.Collision(_bullet))
+                star?.Update();
+                if (star.Collision(_bullet))
                 {
                     //System.Media.SystemSounds.Hand.Play();
-                    Console.Beep(300, 30);
+                    Console.Beep(400, 30);
                 }
             }
-            foreach (Asteroid a in _asteroids)
+            foreach (Asteroid aster in _asteroids)
             {
-                a?.Update();
-                if (a.Collision(_bullet))
+                aster?.Update();
+                if (aster.Collision(_bullet))
                 {
                     //System.Media.SystemSounds.Hand.Play();
-                    Console.Beep( 300,  50);
+                    Console.Beep(200, 50);
                 }
             }
             _bullet?.Update();
@@ -184,9 +229,12 @@ namespace WinFormsSpaceShipAsteroids
             _backGrnds[0]?.Draw();
             _backGrnds[1]?.Draw();
 
-            foreach (BaseObject obj in _objs) obj?.Draw();
-            foreach (Star s in _stars) s?.Draw();
-            foreach (Asteroid a in _asteroids) a?.Draw();
+            if (_ship != null)
+                _ship?.Draw();
+
+            foreach (Comet comet in _comets) comet?.Draw();
+            foreach (Star star in _stars) star?.Draw();
+            foreach (Asteroid aster in _asteroids) aster?.Draw();
             //for (int i = _stars.Length - 1; i > 0; i--)
             //{
             //    _stars[i]?.Draw();
