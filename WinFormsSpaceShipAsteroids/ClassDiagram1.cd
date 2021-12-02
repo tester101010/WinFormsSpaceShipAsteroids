@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="WinFormsSpaceShipAsteroids.Asteroid" Collapsed="true">
+    <Position X="1.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Asteroid.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WinFormsSpaceShipAsteroids.BaseObject">
+    <Position X="5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAggAgAAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BaseObject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WinFormsSpaceShipAsteroids.Bullet" Collapsed="true">
+    <Position X="6.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Bullet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WinFormsSpaceShipAsteroids.Comet" Collapsed="true">
+    <Position X="8.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Comet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WinFormsSpaceShipAsteroids.Form1" Collapsed="true">
+    <Position X="7.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAABAAACAAAACAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Form1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WinFormsSpaceShipAsteroids.Game" Collapsed="true">
+    <Position X="2" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQEgAAAAAAAhgBAAAAAQMAAAAAAAAAEAAACACAATAA=</HashCode>
+      <FileName>Game.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WinFormsSpaceShipAsteroids.Program">
+    <Position X="3.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WinFormsSpaceShipAsteroids.ResourceTextures" Collapsed="true">
+    <Position X="9.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAACwAAAAAAAAAAAAABEgAAAQAEAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WinFormsSpaceShipAsteroids.Star" Collapsed="true">
+    <Position X="4" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Star.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WinFormsSpaceShipAsteroids.Properties.Resources" Collapsed="true">
+    <Position X="8.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAEAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WinFormsSpaceShipAsteroids.Properties.Settings" Collapsed="true">
+    <Position X="9" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
