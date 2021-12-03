@@ -61,11 +61,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Asteroid.cs" />
+    <Compile Include="Objs surrounding ambience classes\Asteroid.cs" />
     <Compile Include="BackGrnd.cs" />
     <Compile Include="BaseObject.cs" />
-    <Compile Include="Bullet.cs" />
-    <Compile Include="Comet.cs" />
+    <Compile Include="Player\Bullet.cs" />
+    <Compile Include="Objs surrounding ambience classes\Comet.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,16 +73,17 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Game.cs" />
-    <Compile Include="ICollision.cs" />
+    <Compile Include="Objs surrounding ambience classes\Healing.cs" />
+    <Compile Include="Interfases\ICollision.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Player\Ship.cs" />
+    <Compile Include="Objs surrounding ambience classes\Star.cs" />
     <Compile Include="ResourceTextures.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ResourceTextures.resx</DependentUpon>
     </Compile>
-    <Compile Include="Ship.cs" />
-    <Compile Include="Star.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -99,6 +100,7 @@
     <EmbeddedResource Include="ResourceTextures.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ResourceTextures.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
@@ -147,7 +149,79 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Windows Hardware Remove.wav" />
+    <None Include="Resources\SFX\Windows Hardware Remove.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SFX\dswpnup.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SFX\dsitemup.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SFX\dsbarexp.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SFX\dsrlaunc.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SFX\dspunch.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SFX\pluck-pcm8.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SFX\JetEngine.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SFX\cow.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Music\falling.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Music\drama.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SFX\explos.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SFX\laser.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SFX\clipboard.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SFX\Land.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SFX\Jump.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SFX\error.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Music\wallewal.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SFX\top.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SFX\strom.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Music\space3.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Music\space2.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Music\space.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Music\roll.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Music\pluck.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

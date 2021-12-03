@@ -1,25 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace WinFormsSpaceShipAsteroids
 {
-    internal class Comet : BaseObject
+    internal class Healing : BaseObject
     {
-        private Bitmap cmt;
 
-        public Comet(Point pos, Point dir, Size size) : base(pos, dir, size)
+        private Bitmap heal;
+
+        public Healing(Point pos, Point dir, Size size) : base(pos, dir, size)
         {
-            cmt = ResourceTextures.fire_fall;
+            heal = ResourceTextures.Health;
+            Heal = 30;
         }
+
+        public int Heal { get; internal set; }
 
         public override void Draw()
         {
             //Game.Buffer.Graphics.DrawEllipse(Pens.Gold,Pos.X,Pos.Y,Size.Width,Size.Height);
-            Game.Buffer.Graphics.DrawImage(cmt, Pos.X, Pos.Y, 90, 20);
+            Game.Buffer.Graphics.DrawImage(heal, Pos.X, Pos.Y, 22, 22);
             //Game.Buffer.Graphics.DrawImage(ResourceTextures.fire_fall, Pos.X, Pos.Y, 90, 20);
         }
 

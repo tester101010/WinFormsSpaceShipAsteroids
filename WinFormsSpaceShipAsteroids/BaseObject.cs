@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace WinFormsSpaceShipAsteroids
 {
-    abstract class BaseObject: ICollision
+    public delegate void Message();
+
+    public abstract class BaseObject : ICollision
     {
         protected Point Pos;
         protected Point Dir;
         protected Size Size;
 
-        protected BaseObject(Point pos, Point dir, Size size)
+        public BaseObject(Point pos, Point dir, Size size)
         {
             Pos = pos;
             Dir = dir;
@@ -21,23 +24,42 @@ namespace WinFormsSpaceShipAsteroids
         }
 
         public abstract void Draw();
-        //{
-        ////Game.Buffer.Graphics.DrawEllipse(Pens.Gold,Pos.X,Pos.Y,Size.Width,Size.Height);
-        //Game.Buffer.Graphics.DrawImage(ResourceTextures.asteroids1, Pos.X, Pos.Y, 25, 25);
-        //}
 
         public abstract void Update();
+
+        //public bool Collision(ICollision o) => o.Rect.IntersectsWith(this.Rect);
+        public Rectangle Rect => new Rectangle(Pos,Size);//throw new NotImplementedException();
+        //public Rectangle Rect => Rectangle(); //throw new NotImplementedException();
+
+        //public Rectangle Rect
         //{
-            //Pos.X = Pos.X - Dir.X;
-            //Pos.Y = Pos.Y;// + Dir.Y;
-            //if (Pos.X < 0) Pos.X =  Game.Width;
-            //if (Pos.X > Game.Width) Dir.X = -Dir.X;
-            //if (Pos.Y < 0) Dir.Y = -Dir.Y;
-            //if (Pos.Y > Game.Heigth) Dir.Y = -Dir.Y;
-       //}
+        //    get
+        //    {
+        //        return new Rectangle(Pos, Size);
+        //    }
+        //}
 
-        public Rectangle Rect => new Rectangle(Pos, Size);//throw new NotImplementedException();
+        public virtual bool Collision(ICollision obj)
+        {
+            //try
+            //{
+            //    return obj.Rect.IntersectsWith(Rect);
 
-        public bool Collision(ICollision o) => o.Rect.IntersectsWith(this.Rect);//throw new NotImplementedException();
+            //}
+
+            //catch (NullReferenceException)
+            //{
+            //    Console.WriteLine("ArgumentNullException"); return false;
+            //}
+
+            //finally
+            //{
+            //    // Использование блока finally гарантирует, что набор операторов будет
+            //    //выполняться всегда, независимо от того, возникло исключение любого типа или нет)
+            //    new Rectangle(100, 100, 1, 1);
+            //}
+
+            return obj.Rect.IntersectsWith(Rect);
+        }
     }
 }

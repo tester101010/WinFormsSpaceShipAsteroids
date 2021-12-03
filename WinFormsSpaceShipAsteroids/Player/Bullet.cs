@@ -9,8 +9,11 @@ namespace WinFormsSpaceShipAsteroids
 {
     class Bullet : BaseObject
     {
+        private int _dir;
+
         public Bullet(Point pos, Point dir, Size size) : base(pos, dir, size)
         {
+            _dir = dir.X;
         }
 
         public override void Draw()
@@ -21,8 +24,7 @@ namespace WinFormsSpaceShipAsteroids
 
         public override void Update()
         {
-            Pos.X = Pos.X + 3;
+            Pos.X = Pos.X + _dir;
         }
-
     }
 }

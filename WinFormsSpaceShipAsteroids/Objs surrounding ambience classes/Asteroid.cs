@@ -13,12 +13,14 @@ namespace WinFormsSpaceShipAsteroids
         //private int SH = 9;
 
         public int Power { get; set; }
+        public int Damage { get; internal set; }
 
         private Bitmap aster;
 
         public Asteroid(Point pos, Point dir, Size size) : base(pos, dir, size)
         {
             Power = 1;
+            Damage = 10;
             aster = ResourceTextures.asteroids1;
         }
 
