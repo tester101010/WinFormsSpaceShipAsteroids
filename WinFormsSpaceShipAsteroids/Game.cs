@@ -8,6 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+//ToDo: 
+// 1) пофиксить медиа файлы и папки
+// 2) сделать паузу и выход из приложения
+// 3) сделать звуки и музыку в игре
+// 4) сделать анимацию взрывов и огонь двигателя коробля 
+//  ) 
+// LAST) сделать меню паузы и настроек (GUI)
+
 namespace WinFormsSpaceShipAsteroids
 {
     //static class Sound
@@ -46,6 +54,8 @@ namespace WinFormsSpaceShipAsteroids
         //private static int _bulletHeigth = 33;
         //private static int _bulletWidth = 14;
         //private static SoundPlayer _s1 = "cow.wav";
+        private static SoundPlayer player;
+        private const string UriString = "drama.wav";
 
         Random rnd = new Random();
         int rndMin = 3;
@@ -114,6 +124,9 @@ namespace WinFormsSpaceShipAsteroids
             _asteroids = new Asteroid[4];
             _healings = new Healing[4];
 
+            // Sound.SFXHeal.PlayLooping();//music.Play();
+            //Sound.music.Open(new Uri(UriString, UriKind.Relative)); // загрузка фоновой музыки
+            InitializeSound();
             // ToDo нельзя убрать _bullet = new Bullet, выбрасывает исключение BaseObject 
             // public bool Collision(ICollision o) => o.Rect.IntersectsWith(this.Rect);
             //_ship.Bullet  = new Bullet(new Point(0, Width - _bulletWidth), new Point(_bulletSpeed, 0), new Size(_bulletWidth, _bulletHeigth));
@@ -167,6 +180,13 @@ namespace WinFormsSpaceShipAsteroids
             //    }
             //}
             #endregion
+        }
+
+        private static void InitializeSound()
+        {
+            // Create an instance of the SoundPlayer class.
+            //player = new SoundPlayer();
+            Sound.BackgroundMusic.PlaySync();
         }
 
         public static Ship _ship = new Ship(new Point(126, 126), new Point(12, 12), new Size(_shipWidth, _shipHeigth));
@@ -376,6 +396,9 @@ namespace WinFormsSpaceShipAsteroids
 
                 _ship?.EnergyHi(_healings[i].Heal);
                 _healings[i] = null;
+                Sound.SFXHeal.Play();
+               //player.Play ( UriString);
+               
 
                 // SystemSound.Asterisk.Play();
             }

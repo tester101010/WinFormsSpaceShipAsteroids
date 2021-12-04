@@ -22,6 +22,7 @@ namespace WinFormsSpaceShipAsteroids
 
         public Ship(Point pos, Point dir, Size size) : base(pos, dir, size)
         {
+            //_plImg = ResourceTextures.Spaceship_480_270;
             _plImg = ResourceTextures.Spaceship_480_270;
         }
 
@@ -29,6 +30,7 @@ namespace WinFormsSpaceShipAsteroids
 
         public void ShootBullet()
         {//Game.Heigth - _bulletHeigth
+            Sound.shotSound.Play();
             Bullet = new Bullet(new Point(Pos.X + Size.Width,Pos.Y + Size.Height/2 - _bulletHeigth/2), new Point(_bulletSpeed, 0), new Size(_bulletWidth, _bulletHeigth));
         }
 
