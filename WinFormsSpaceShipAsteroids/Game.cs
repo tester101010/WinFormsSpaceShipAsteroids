@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 //ToDo: 
-// 1) пофиксить медиа файлы и папки
-// 2) сделать паузу и выход из приложения
-// 3) сделать звуки и музыку в игре
+// 1) пофиксить медиа файлы и папки         V
+// 2) сделать метод паузы и выход из приложения
+// 3) сделать звуки и музыку в игре         V
 // 4) сделать анимацию взрывов и огонь двигателя коробля 
 //  ) 
 // LAST) сделать меню паузы и настроек (GUI)
@@ -49,13 +49,15 @@ namespace WinFormsSpaceShipAsteroids
         private static BackGrnd[] _backGrnds;
         private static int _backGrndsScrollSpeed = 1;
 
+        private static bool _Pause = false;
+
         //private static Bullet _bullet; // ToDo
         //private static int _bulletSpeed = 33;
         //private static int _bulletHeigth = 33;
         //private static int _bulletWidth = 14;
         //private static SoundPlayer _s1 = "cow.wav";
-        private static SoundPlayer player;
-        private const string UriString = "drama.wav";
+        //private static SoundPlayer player;
+        //private const string UriString = "drama.wav";
 
         Random rnd = new Random();
         int rndMin = 3;
@@ -117,26 +119,13 @@ namespace WinFormsSpaceShipAsteroids
 
             int _speedSpaceObjs = 9;
 
-
-            //_objs = new BaseObject[6];
             _comets = new Comet[3];
             _stars = new Star[20];
             _asteroids = new Asteroid[4];
             _healings = new Healing[4];
 
-            // Sound.SFXHeal.PlayLooping();//music.Play();
             //Sound.music.Open(new Uri(UriString, UriKind.Relative)); // загрузка фоновой музыки
-            InitializeSound();
-            // ToDo нельзя убрать _bullet = new Bullet, выбрасывает исключение BaseObject 
-            // public bool Collision(ICollision o) => o.Rect.IntersectsWith(this.Rect);
-            //_ship.Bullet  = new Bullet(new Point(0, Width - _bulletWidth), new Point(_bulletSpeed, 0), new Size(_bulletWidth, _bulletHeigth));
-
-            //for (int i = 0; i < arrLength; i++)
-            //{
-            //    rndObj[i] = rnd.Next(rndMin, rndMax);
-            //    //Console.Write($" {rndObj[i]}" + ",");
-            //}
-
+            InitializeGaneMusic();
 
             #region V1
             for (int i = 0; i < _comets.Length; i++)
@@ -144,7 +133,6 @@ namespace WinFormsSpaceShipAsteroids
                 int rSp = rnd.Next(5, 50);                                        // new Point( -i*r, -i*r )
                 _comets[i] = new Comet(new Point(Width, rnd.Next(1, Game.Heigth)), new Point((rSp / 3) * 2, 0), new Size(1, 1));
             }
-            // ((ICollision)Comet)comets.
 
             for (int i = 0; i < _stars.Length; i++)            //       ((i)+(r+i*i), 0),
             {                                                   //, new Point(-(i/r) , 0),
@@ -182,27 +170,47 @@ namespace WinFormsSpaceShipAsteroids
             #endregion
         }
 
-        private static void InitializeSound()
+        private static void InitializeGaneMusic()
         {
-            // Create an instance of the SoundPlayer class.
-            //player = new SoundPlayer();
-            Sound.BackgroundMusic.PlaySync();
+            Sound.BackgroundMusic.Play();
+            //Sound.BackgroundMusic.PlaySync();
         }
 
         public static Ship _ship = new Ship(new Point(126, 126), new Point(12, 12), new Size(_shipWidth, _shipHeigth));
 
         private static void Form_KeyDown(object sender, KeyEventArgs e) // медод с логикой управления
         {
-            //if (e.KeyCode == Keys.ControlKey) _ship.ShootBullet();
-            if (e.KeyCode == Keys.ControlKey) _ship.ShootBullet();// = new Bullet(new Point(_ship.Rect.X + _shipWidth, _ship.Rect.Y + _shipHeigth / 2 - _bulletHeigth / 2), new Point(_bulletSpeed, 0), new Size(_bulletWidth, _bulletHeigth));
+
             if (e.KeyCode == Keys.Up) _ship.Up();
             if (e.KeyCode == Keys.Down) _ship.Down();
             if (e.KeyCode == Keys.Left) _ship.Left();
             if (e.KeyCode == Keys.Right) _ship.Right();
-            //if (e.KeyCode == Keys.Escape) _ship.Die(); // TODO
-            //if (e.KeyCode == Keys.Escape) Game.Finish();
+
+            if (e.KeyCode == Keys.ControlKey) _ship.ShootBullet();
+            if (e.KeyCode == Keys.Escape) GamePause();
             // CloseAllForms();
-            //GamePause(e);
+        }
+
+        private static void GamePause()
+        {
+            if (_Pause==false)
+            {
+                _Pause = true;
+                _timer.Stop();
+
+                string _s = "PAUSE";
+                int _fontSize = 80;
+
+                Buffer.Graphics.DrawString(_s, new Font(FontFamily.GenericSansSerif, _fontSize, FontStyle.Regular),
+                    Brushes.Orange, Game.Width / 2 - _fontSize * _s.Length / 3, Game.Heigth / 2 - _fontSize);
+                Buffer.Render();
+            }
+            else
+            {
+                _Pause = false;
+                _timer.Start();
+            }
+            //throw new NotImplementedException();
         }
 
         public static void Update()
@@ -214,6 +222,10 @@ namespace WinFormsSpaceShipAsteroids
             {
                 Finish();
             }
+            //if (_ship != null && _ship.Energy <= 0)
+            //{
+            //    Finish();
+            //}
 
             //foreach (Comet comet in _comets)
             //{
@@ -262,7 +274,7 @@ namespace WinFormsSpaceShipAsteroids
 
             _ship?.Bullet?.Update();
 
-            //ActionWithAsteroids();
+            ActionWithAsteroids();
             ActionWithComets();
             //ActionWithStar();
             ActionWithHealing();
@@ -280,25 +292,25 @@ namespace WinFormsSpaceShipAsteroids
         {
             for (int i = 0; i < _asteroids.Length; i++)
             {
-                if (_asteroids[i] == null)
-                    continue;
+                if (_asteroids[i] == null) continue;
+                //_asteroids[i].Update();
 
                 if (_ship?.Bullet != null && _ship.Bullet.Collision(_asteroids[i]))
                 {
-                    //SystemSound.Hand.Play();
+                    Sound.SFXExplosion1.Play();
+
                     _asteroids[i] = null;
                     _ship?.BulletDestroy();
                     continue;
                 }
-                if (!_ship.Collision(_asteroids[i]))
-                    continue;
 
-                _ship?.EnergyLow(_asteroids[i].Damage);
-                _asteroids[i] = null;
+                if (_ship.Collision(_asteroids[i]))
+                {
+                    Sound.SFXHit.Play();
 
-                // SystemSound.Asterisk.Play();
-                if (_ship.Energy <= 0)
-                    _ship?.Die();
+                    _ship?.EnergyLow(_asteroids[i].Damage);
+                    _asteroids[i] = null;
+                }
             }
         }
 
@@ -308,14 +320,17 @@ namespace WinFormsSpaceShipAsteroids
             {
                 if (_comets[i] == null) continue;
                 _comets[i].Update();
+
                 if (_ship.Bullet != null && _ship.Bullet.Collision(_comets[i]))
                 {
+                    Sound.SFXExplosion1.Play();
+
                     Random rnd = new Random();
                     int rSp = rnd.Next(5, 50);
-                    System.Media.SystemSounds.Hand.Play();
-                    //_comets[i] = null;
+
+                    _comets[i] = null;
+                    _ship?.BulletDestroy();
                     CometsRepoint(rnd, rSp, i);
-                    //_ship.Bullet = null;
                     continue;
                 }
 
@@ -323,39 +338,12 @@ namespace WinFormsSpaceShipAsteroids
                 {
                     Random rnd = new Random();
                     int rSp = rnd.Next(5, 50);
-                    //System.Media.SystemSounds.Asterisk.Play();
+
                     _ship?.EnergyLow(_comets[i].Damage);
                     CometsRepoint(rnd, rSp, i);
+                    Sound.SFXHit.Play();
 
-                    //_s1.Play();
                 }
-                //    if (!_ship.Collision(_comets[i])) continue;
-                //    _comets[i] = null;
-                //    System.Media.SystemSounds.Asterisk.Play();
-            }
-
-            for (int i = 0; i < _comets.Length; i++)
-            {
-                if (_comets[i] == null)
-                    continue;
-
-                if (_ship?.Bullet != null && _ship.Bullet.Collision(_comets[i]))
-                {
-                    //SystemSound.Hand.Play();
-                    _comets[i] = null;
-                    _ship?.BulletDestroy();
-                    continue;
-                }
-
-                if (!_ship.Collision(_comets[i]))
-                    continue;
-
-                _ship?.EnergyLow(_comets[i].Damage);
-                _comets[i] = null;
-
-                // SystemSound.Asterisk.Play();
-                if (_ship.Energy <= 0)
-                    _ship?.Die();
             }
         }
 
@@ -366,21 +354,12 @@ namespace WinFormsSpaceShipAsteroids
                 if (_stars[i] == null)
                     continue;
 
-                if (_ship?.Bullet != null && _ship.Bullet.Collision(_stars[i]))
+                if (_ship.Collision(_stars[i]))
                 {
-                    //SystemSound.Hand.Play();
+                    Sound.SFXHit.Play();
+                    _ship?.EnergyLow(_stars[i].Damage);
                     _stars[i] = null;
-                    _ship?.BulletDestroy(); continue;
                 }
-
-                if (!_ship.Collision(_stars[i])) continue;
-
-                _ship?.EnergyLow(_stars[i].Damage);
-                _stars[i] = null;
-
-                // SystemSound.Asterisk.Play();
-                if (_ship.Energy <= 0)
-                    _ship?.Die();
             }
         }
 
@@ -397,9 +376,9 @@ namespace WinFormsSpaceShipAsteroids
                 _ship?.EnergyHi(_healings[i].Heal);
                 _healings[i] = null;
                 Sound.SFXHeal.Play();
-               //player.Play ( UriString);
-               
 
+
+                //player.Play ( UriString);
                 // SystemSound.Asterisk.Play();
             }
         }
@@ -412,12 +391,17 @@ namespace WinFormsSpaceShipAsteroids
             _backGrnds[0]?.Draw();
             _backGrnds[1]?.Draw();
 
-            if (_ship != null)
+            if (_ship.Energy > 0)
             {
-                _ship?.Draw();
-                Buffer.Graphics.DrawString("Energy:" + _ship.Energy, new Font(FontFamily.GenericSansSerif, 15, FontStyle.Bold), Brushes.GreenYellow, 10, 5);
+                if (_ship != null)
+                {
+                    _ship?.Draw();
+                    Buffer.Graphics.DrawString("Energy:" + _ship.Energy, new Font(FontFamily.GenericSansSerif, 15, FontStyle.Bold), Brushes.GreenYellow, 10, 5);
+                }
+                _ship?.Bullet?.Draw();
 
             }
+
 
             foreach (Comet comet in _comets) comet?.Draw();
             foreach (Star star in _stars) star?.Draw();
@@ -428,21 +412,24 @@ namespace WinFormsSpaceShipAsteroids
             //    _stars[i]?.Draw();
             //    //_stars[i]?.Draw();
             //}
-            _ship?.Bullet?.Draw();
+
             Buffer.Render();
-            //throw new NotImplementedException();
         }
 
         public static void Finish()
         {
+            Sound.SFXExplosion2.PlaySync();
+
+
             string _s = "The End";
             int _fontSize = 80;
 
-            _timer.Stop();
-            Buffer.Graphics.DrawString(_s, new Font(FontFamily.GenericSansSerif,
-            _fontSize, FontStyle.Underline), Brushes.Orange, Game.Width / 2 - _fontSize * _s.Length / 3, Game.Heigth / 2 - _fontSize);
-            Buffer.Render();
+            Buffer.Graphics.DrawString(_s, new Font(FontFamily.GenericSansSerif, _fontSize, FontStyle.Underline), 
+                Brushes.Orange, Game.Width / 2 - _fontSize * _s.Length / 3, Game.Heigth / 2 - _fontSize);
 
+            Buffer.Render();
+            _timer.Stop();
+            //_ship = null;
             //CloseAllForms();
         }
 

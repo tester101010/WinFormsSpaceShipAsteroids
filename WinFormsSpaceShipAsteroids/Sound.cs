@@ -14,6 +14,9 @@ namespace WinFormsSpaceShipAsteroids
         public static System.Media.SoundPlayer shotSound = new System.Media.SoundPlayer("laser.wav");
         public static System.Media.SoundPlayer BackgroundMusic = new System.Media.SoundPlayer("drama.wav");
         public static System.Media.SoundPlayer SFXHeal = new SoundPlayer("dsitemup.wav");
+        public static System.Media.SoundPlayer SFXExplosion1 = new SoundPlayer("dsbarexp.wav");
+        public static System.Media.SoundPlayer SFXExplosion2 = new SoundPlayer("explos.wav");
+        public static System.Media.SoundPlayer SFXHit = new SoundPlayer("Jump.wav");
         public static MediaPlayer music = new MediaPlayer();
 
     }

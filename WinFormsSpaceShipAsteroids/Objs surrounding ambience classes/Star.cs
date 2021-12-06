@@ -14,7 +14,7 @@ namespace WinFormsSpaceShipAsteroids
         public Star(Point pos, Point dir, Size size) : base(pos, dir, size)
         {
             st = ResourceTextures.kiss;
-            Damage = 10;
+            Damage = 1;
         }
 
         public int Damage { get; internal set; }

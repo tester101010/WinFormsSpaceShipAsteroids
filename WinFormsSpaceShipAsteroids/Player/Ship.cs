@@ -14,6 +14,9 @@ namespace WinFormsSpaceShipAsteroids
         private static int _bulletHeigth = 33;
         private static int _bulletWidth = 14;
 
+        private static int _shipWidth = 100;
+        private static int _shipHeigth = 50;
+
         public int Energy => _energy;
 
         public Bullet Bullet { get;  set; }
@@ -29,7 +32,7 @@ namespace WinFormsSpaceShipAsteroids
         private Bitmap _plImg;
 
         public void ShootBullet()
-        {//Game.Heigth - _bulletHeigth
+        {
             Sound.shotSound.Play();
             Bullet = new Bullet(new Point(Pos.X + Size.Width,Pos.Y + Size.Height/2 - _bulletHeigth/2), new Point(_bulletSpeed, 0), new Size(_bulletWidth, _bulletHeigth));
         }
@@ -46,7 +49,7 @@ namespace WinFormsSpaceShipAsteroids
 
         public override void Draw()
         {
-            Game.Buffer.Graphics.DrawImage(_plImg, Pos.X, Pos.Y, 100, 50);
+            Game.Buffer.Graphics.DrawImage(_plImg, Pos.X, Pos.Y, _shipWidth, _shipHeigth);
         }
 
         public override void Update()
