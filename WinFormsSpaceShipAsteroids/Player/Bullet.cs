@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WinFormsSpaceShipAsteroids
 {
-    class Bullet : BaseObject
+    sealed class Bullet : BaseObject
     {
         private int _dir;
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WinFormsSpaceShipAsteroids
 {
-    class Star : BaseObject
+    sealed class Star : BaseObject
     {
         private Bitmap st;
 

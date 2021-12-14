@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WinFormsSpaceShipAsteroids
 {
-    class BackGrnd : BaseObject
+    sealed class BackGrnd : BaseObject
     {
         private Bitmap BackGrndImg;
 
@@ -18,18 +18,14 @@ namespace WinFormsSpaceShipAsteroids
 
         public override void Draw()
         {
-            Game.Buffer.Graphics.DrawImage(BackGrndImg, Pos.X, Pos.Y, 1280, 720);//1280, 720 1500, 900
-            //Game.Buffer.Graphics.DrawImage(ResourceTextures.galaxy_png_images, Pos.X, Pos.Y, 1280, 720);//1280, 720 1500, 900
-            //throw new NotImplementedException();
+            Game.Buffer.Graphics.DrawImage(BackGrndImg, Pos.X, Pos.Y, 1280, 720);//1280, 720 1500, 900   
         }
         public override void Update()
         {
             Pos.X = Pos.X - Dir.X;
             Pos.Y = Pos.Y;// + Dir.Y;
-            if (Pos.X < (-1280)) Pos.X = Game.Width;
-            //if (Pos.X > Game.Width) Dir.X = -Dir.X;
-            //if (Pos.Y < 0) Dir.Y = -Dir.Y;
-            //if (Pos.Y > Game.Heigth) Dir.Y = -Dir.Y;
+
+            if (Pos.X < (-Game.Width)) Pos.X = Game.Width;
         }
     }
 }

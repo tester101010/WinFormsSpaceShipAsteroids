@@ -80,6 +80,7 @@
     <Compile Include="Game.cs" />
     <Compile Include="Objs surrounding ambience classes\Healing.cs" />
     <Compile Include="Interfases\ICollision.cs" />
+    <Compile Include="Player\SpaceShipClassLogs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Player\Ship.cs" />

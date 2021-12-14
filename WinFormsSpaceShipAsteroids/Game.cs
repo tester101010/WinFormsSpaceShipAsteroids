@@ -13,6 +13,7 @@ using System.Windows.Forms;
 // 2) сделать метод паузы и выход из приложения    +-
 // 3) сделать звуки и музыку в игре                V
 // 4) сделать анимацию взрывов и огонь двигателя коробля 
+// 5) уменьшить жесткую зависимость с помощью событий
 //  ) 
 // LAST) сделать меню паузы и настроек (GUI)
 
@@ -73,6 +74,7 @@ namespace WinFormsSpaceShipAsteroids
             Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Heigth));
             form.KeyDown += Form_KeyDown;
             Ship.MessageDie += Finish;
+            //Ship.MessageDie += _ship.Die;
             CreateTimer(_timer);
             Load();
         }
@@ -127,7 +129,7 @@ namespace WinFormsSpaceShipAsteroids
 
             for (int i = 0; i < _stars.Length; i++)            //       ((i)+(r+i*i), 0),
             {                                                   //, new Point(-(i/r) , 0),
-                _stars[i] = new Star(new Point(Width - 5, i * 18), new Point((_speedSpaceObjs * _speedSpaceObjs - ((i * i) / (2 * _speedSpaceObjs - 12))) / 3, 0), new Size(3, 3));
+                _stars[i] = new Star(new Point(Width - 5, (i * 18)-15), new Point((_speedSpaceObjs * _speedSpaceObjs - ((i * i) / (2 * _speedSpaceObjs - 12))) / 3, 0), new Size(3, 3));
                 //_objs[i] = new BaseObject(new Point(Width, i* 10* r), new Point( -i*r, -i*r ), new Size(r*2, r));
                 //(new Point(1260, _random.Next(0, 500)), new Point(11 - i, 0), new Size(33, 33));
             }
@@ -209,13 +211,19 @@ namespace WinFormsSpaceShipAsteroids
             _backGrnds[0]?.Update();
             _backGrnds[1]?.Update();
 
-            if (_ship.Energy <= 0)
-            {
-                Finish();
-            }
-            //if (_ship != null && _ship.Energy <= 0)
+            //if (_ship.Energy <= 0)
             //{
             //    Finish();
+            //}
+            if (_ship.Energy <= 0)
+            {
+                _ship.Die();
+            }
+            //if (_ship.Energy <= 0)
+            //{
+            //    //_ship.Die();
+            //   // Ship.MessageDie();
+            //    _timer.Stop();
             //}
 
             for (int i = 0; i < _comets.Length; i++)
@@ -305,7 +313,7 @@ namespace WinFormsSpaceShipAsteroids
 
         private static void ActionWithComets()
         {
-            int addScores = 500;
+            int addScores = 50;
             for (var i = 0; i < _comets.Length; i++)
             {
                 if (_comets[i] == null) continue;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WinFormsSpaceShipAsteroids
 {
-    internal class Asteroid : BaseObject
+    sealed class Asteroid : BaseObject
     {
         //private int SW = 9;
         //private int SH = 9;

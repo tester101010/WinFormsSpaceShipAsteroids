@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace WinFormsSpaceShipAsteroids
 {
-    class Ship : BaseObject
+    sealed class Ship : BaseObject
     {
         private int _energy = 100;
         private int _score = 0;
         private static int _bulletSpeed = 33;
-        private static int _bulletHeigth = 33;
+        private static int _bulletHeigth = 28;
         private static int _bulletWidth = 14;
 
         private static int _shipWidth = 100;
@@ -87,8 +87,33 @@ namespace WinFormsSpaceShipAsteroids
 
         public void Die()
         {
-            MessageDie?.Invoke();
+            MessageDie?.Invoke(); // MessageDie += Game.Finish;
         }
+        //public void Die()
+        //{
+
+        //        Sound.SFXExplosion2.PlaySync();
+
+
+        //        string _s1 = "The End";
+        //        int _fontSize_S1 = 80;
+
+        //    Game.Buffer.Graphics.DrawString(_s1, new Font(FontFamily.GenericSansSerif, _fontSize_S1, FontStyle.Underline),
+        //            Brushes.Orange, Game.Width / 2 - _fontSize_S1 * _s1.Length / 3 - _fontSize_S1 / 2, Game.Heigth / 2 - _fontSize_S1);
+
+        //        string _s2 = $"Your scores {Scores}";
+        //        int _fontSize_S2 = 40;
+
+        //    Game.Buffer.Graphics.DrawString(_s2, new Font(FontFamily.GenericSansSerif, _fontSize_S2, FontStyle.Underline),
+        //            Brushes.LemonChiffon, Game.Width / 2 - _fontSize_S2 * _s2.Length / 3, Game.Heigth / 4 - _fontSize_S2);
+
+
+        //    Game.Buffer.Render();
+        //    //_timer.Stop();
+        //        //_ship = null;
+        //        //CloseAllForms();
+
+        //}
 
         internal void BulletDestroy()
         {

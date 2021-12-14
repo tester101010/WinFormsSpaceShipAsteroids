@@ -2,7 +2,7 @@
 
 namespace WinFormsSpaceShipAsteroids
 {
-    internal class Healing : BaseObject
+    sealed class Healing : BaseObject
     {
 
         private Bitmap heal;
