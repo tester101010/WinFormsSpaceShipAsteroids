@@ -57,7 +57,8 @@ namespace WinFormsSpaceShipAsteroids
             //    // Использование блока finally гарантирует, что набор операторов будет
             //    //выполняться всегда, независимо от того, возникло исключение любого типа или нет)
             //    new Rectangle(100, 100, 1, 1);
-            //}
+            //}
+
 
             return obj.Rect.IntersectsWith(Rect);
         }

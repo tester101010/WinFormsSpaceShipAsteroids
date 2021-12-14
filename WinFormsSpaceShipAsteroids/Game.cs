@@ -9,25 +9,16 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 //ToDo: 
-// 1) пофиксить медиа файлы и папки         V
-// 2) сделать метод паузы и выход из приложения
-// 3) сделать звуки и музыку в игре         V
+// 1) пофиксить медиа файлы и папки                V
+// 2) сделать метод паузы и выход из приложения    +-
+// 3) сделать звуки и музыку в игре                V
 // 4) сделать анимацию взрывов и огонь двигателя коробля 
 //  ) 
 // LAST) сделать меню паузы и настроек (GUI)
 
 namespace WinFormsSpaceShipAsteroids
 {
-    //static class Sound
-    //{
-    //    public static System.Media.SoundPlayer screamSound = new System.Media.SoundPlayer("scream.wav");
-    //    public static System.Media.SoundPlayer shotSound = new System.Media.SoundPlayer("shot.wav");
-    //    public static System.Media.SoundPlayer shipDamageSound = new System.Media.SoundPlayer("dmg.wav");
-    //    public static System.Media.SoundPlayer endSound = new System.Media.SoundPlayer("end.wav");
-    //    public static System.Media.SoundPlayer metaHit = new System.Media.SoundPlayer("metalhit.wav");
-    //    public static System.Media.SoundPlayer heal = new System.Media.SoundPlayer("heal.wav");
-    //    public static MediaPlayer music = new MediaPlayer();
-    //}
+
     class Game
     {
         private static BufferedGraphicsContext _context;
@@ -125,7 +116,7 @@ namespace WinFormsSpaceShipAsteroids
             _healings = new Healing[4];
 
             //Sound.music.Open(new Uri(UriString, UriKind.Relative)); // загрузка фоновой музыки
-            InitializeGaneMusic();
+            InitializeGameMusic();
 
             #region V1
             for (int i = 0; i < _comets.Length; i++)
@@ -170,7 +161,7 @@ namespace WinFormsSpaceShipAsteroids
             #endregion
         }
 
-        private static void InitializeGaneMusic()
+        private static void InitializeGameMusic()
         {
             Sound.BackgroundMusic.Play();
             //Sound.BackgroundMusic.PlaySync();
@@ -193,7 +184,7 @@ namespace WinFormsSpaceShipAsteroids
 
         private static void GamePause()
         {
-            if (_Pause==false)
+            if (_Pause == false)
             {
                 _Pause = true;
                 _timer.Stop();
@@ -225,10 +216,6 @@ namespace WinFormsSpaceShipAsteroids
             //if (_ship != null && _ship.Energy <= 0)
             //{
             //    Finish();
-            //}
-
-            //foreach (Comet comet in _comets)
-            //{
             //}
 
             for (int i = 0; i < _comets.Length; i++)
@@ -276,7 +263,7 @@ namespace WinFormsSpaceShipAsteroids
 
             ActionWithAsteroids();
             ActionWithComets();
-            //ActionWithStar();
+            //ActionWithStar(); // for 3D visual effect
             ActionWithHealing();
         }
 
@@ -290,6 +277,7 @@ namespace WinFormsSpaceShipAsteroids
 
         private static void ActionWithAsteroids()
         {
+            int addScores = 10;
             for (int i = 0; i < _asteroids.Length; i++)
             {
                 if (_asteroids[i] == null) continue;
@@ -300,6 +288,7 @@ namespace WinFormsSpaceShipAsteroids
                     Sound.SFXExplosion1.Play();
 
                     _asteroids[i] = null;
+                    _ship.ScoreIncrease(addScores);
                     _ship?.BulletDestroy();
                     continue;
                 }
@@ -316,6 +305,7 @@ namespace WinFormsSpaceShipAsteroids
 
         private static void ActionWithComets()
         {
+            int addScores = 500;
             for (var i = 0; i < _comets.Length; i++)
             {
                 if (_comets[i] == null) continue;
@@ -329,6 +319,7 @@ namespace WinFormsSpaceShipAsteroids
                     int rSp = rnd.Next(5, 50);
 
                     _comets[i] = null;
+                    _ship.ScoreIncrease(addScores);
                     _ship?.BulletDestroy();
                     CometsRepoint(rnd, rSp, i);
                     continue;
@@ -397,6 +388,7 @@ namespace WinFormsSpaceShipAsteroids
                 {
                     _ship?.Draw();
                     Buffer.Graphics.DrawString("Energy:" + _ship.Energy, new Font(FontFamily.GenericSansSerif, 15, FontStyle.Bold), Brushes.GreenYellow, 10, 5);
+                    Buffer.Graphics.DrawString("Scores:" + _ship.Scores, new Font(FontFamily.GenericSansSerif, 15, FontStyle.Bold), Brushes.GreenYellow, Game.Width - 150, 5);
                 }
                 _ship?.Bullet?.Draw();
 
@@ -421,11 +413,17 @@ namespace WinFormsSpaceShipAsteroids
             Sound.SFXExplosion2.PlaySync();
 
 
-            string _s = "The End";
-            int _fontSize = 80;
+            string _s1 = "The End";
+            int _fontSize_S1 = 80;
 
-            Buffer.Graphics.DrawString(_s, new Font(FontFamily.GenericSansSerif, _fontSize, FontStyle.Underline), 
-                Brushes.Orange, Game.Width / 2 - _fontSize * _s.Length / 3, Game.Heigth / 2 - _fontSize);
+            Buffer.Graphics.DrawString(_s1, new Font(FontFamily.GenericSansSerif, _fontSize_S1, FontStyle.Underline),
+                Brushes.Orange, Game.Width / 2 - _fontSize_S1 * _s1.Length / 3 - _fontSize_S1 / 2, Game.Heigth / 2 - _fontSize_S1);
+
+            string _s2 = $"Your scores {_ship.Scores}";
+            int _fontSize_S2 = 40;
+
+            Buffer.Graphics.DrawString(_s2, new Font(FontFamily.GenericSansSerif, _fontSize_S2, FontStyle.Underline),
+                Brushes.LemonChiffon, Game.Width / 2 - _fontSize_S2 * _s2.Length / 3, Game.Heigth / 4 - _fontSize_S2);
 
             Buffer.Render();
             _timer.Stop();

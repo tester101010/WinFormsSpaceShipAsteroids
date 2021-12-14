@@ -10,6 +10,7 @@ namespace WinFormsSpaceShipAsteroids
     class Ship : BaseObject
     {
         private int _energy = 100;
+        private int _score = 0;
         private static int _bulletSpeed = 33;
         private static int _bulletHeigth = 33;
         private static int _bulletWidth = 14;
@@ -18,6 +19,7 @@ namespace WinFormsSpaceShipAsteroids
         private static int _shipHeigth = 50;
 
         public int Energy => _energy;
+        public int Scores => _score;
 
         public Bullet Bullet { get;  set; }
 
@@ -47,6 +49,11 @@ namespace WinFormsSpaceShipAsteroids
             _energy += n;
         }
 
+        public void ScoreIncrease(int n)
+        {
+            _score += n;
+        }
+
         public override void Draw()
         {
             Game.Buffer.Graphics.DrawImage(_plImg, Pos.X, Pos.Y, _shipWidth, _shipHeigth);
@@ -57,6 +64,7 @@ namespace WinFormsSpaceShipAsteroids
             //throw new NotImplementedException();
         }
 
+        #region ShipMovement
         public void Left()
         {
             //  Pos.X = Pos.X - Dir.X;
@@ -75,6 +83,7 @@ namespace WinFormsSpaceShipAsteroids
         {
             if (Pos.Y + Size.Height + 9 < Game.Heigth) Pos.Y = Pos.Y + Dir.Y;
         }
+        #endregion
 
         public void Die()
         {
